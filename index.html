@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>English জানালা</title>
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <!-- daisy-ui CDN-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+      .lsn-active {
+        background-color: blue;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="header" class="sticky top-0 z-50 hidden">
+      <nav class="flex justify-between items-center bg-[#f0efef] min-h-16">
+        <div class="logo flex flex-col md:flex-row items-center px-4 md:px-12">
+          <h1>English</h1>
+          <img src="assets/logo.png" alt="English Janala" />
+          <h1>জানালা</h1>
+        </div>
+        <div class="nav-btns flex items-center gap-4 px-4 md:px-12">
+          <a href="#FAQ">
+            <button class="btn btn-sm btn-outline btn-primary">
+              <i class="fa-solid fa-circle-question"></i>FAQ
+            </button>
+          </a>
+          <a href="#learn-vocabularies">
+            <button class="btn btn-sm btn-outline btn-primary">
+              <i class="fa-solid fa-book-open"></i>Learn
+            </button>
+          </a>
+          <button id="log-out" class="btn btn-sm btn-outline btn-primary">
+            <i class="fa-solid fa-right-from-bracket"></i>Logout
+          </button>
+        </div>
+      </nav>
+      <hr class="border border-[#C6BDBD]" />
+    </header>
+    <main>
+      <section id="hero" class="hero flex flex-col-reverse md:flex-row">
+        <div class="hero-content flex flex-col gap-4 md:p-12 w-3/4">
+          <div class="hero-content-fields">
+            <p class="text-4xl md:text-5xl font-bold">
+              <span class="text-primary">English</span> is Easy!!
+            </p>
+            <br />
+            <p class="text-sm md:text-1xl">
+              আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি যদি নতুন হন অথবা
+              আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে
+              যাবে অন্য একটি Level এ
+            </p>
+            <br />
+            <input
+              type="text"
+              placeholder="Enter your name"
+              class="input input-[#C6BDBD] input-bordered"
+              id="input-name"
+            />
+            <br />
+            <br />
+            <input
+              type="password"
+              placeholder="Enter password(type-123456)"
+              class="input input-[#C6BDBD] input-bordered"
+              id="input-password"
+            />
+            <br />
+            <br />
+            <button class="btn btn-primary" id="login-btn">Get Started</button>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="assets/hero-student.png" alt="hero-image" class="w-full" />
+        </div>
+      </section>
+      <br />
+      <section
+        id="learn-vocabularies"
+        class="learn-vocabularies flex flex-col justify-center items-center hidden"
+      >
+        <br />
+        <br />
+        <br />
+        <div class="vol-text">
+          <p class="text-3xl md:text-4xl font-bold">
+            <span class="text-primary">Let's</span> Learn vocabularies
+          </p>
+        </div>
+        <br />
+        <div
+          id="learn-btns"
+          class="vol-lessons flex flex-wrap justify-center items-center gap-4"
+        ></div>
+        <br />
+        <div
+          class="lessons-container bg-[#C6BDBD50] rounded p-4 w-[400px] md:w-[800px] lg:w-[1100px]"
+        >
+          <div
+            id="loader"
+            class="loader flex justify-center items-center hidden"
+          >
+            <span class="loading loading-dots loading-lg"></span>
+          </div>
+          <div
+            id="lsn_card_not_selected"
+            class="lessons-card_not_selected flex flex-col gap-4 items-center justify-center min-h-52 md:min-h-72"
+          >
+            <p>আপনি এখনো কোন Lesson Select করেননি।</p>
+            <p class="font-bold text-2xl">একটি Lesson Select করুন।</p>
+          </div>
+          <div
+            id="lsn_card_selected"
+            class="lesson-card-selected grid grid-cols-2 lg:grid-cols-4 md:px-20 lg:px-0 gap-4"
+          ></div>
+          <!-- modal -->
+          <dialog id="modal" class="modal"></dialog>
+          <div
+            id="lsn_card_no_vocabulary"
+            class="lsn_card_no_vocabulary flex flex-col justify-center items-center gap-4 hidden min-h-52 md:min-h-72"
+          >
+            <img class="w-1/12" src="assets/alert-error.png" alt="alert" />
+            <p class="text-1xl">এই Lesson এ কোন Vocabulary নেই।</p>
+            <p class="text-1xl font-bold">নেক্সট Lesson এ যান</p>
+          </div>
+        </div>
+      </section>
+      <br />
+      <br />
+      <br />
+      <section
+        id="FAQ"
+        class="FAQ flex flex-col justify-center items-center hidden"
+      >
+        <br />
+        <br />
+        <br />
+
+        <div class="FAQ-text">
+          <p class="text-3xl md:text-4xl font-bold">
+            <span class="text-primary">Frequently</span> Asked Questions
+          </p>
+        </div>
+        <br />
+        <div class="FAQ-questions w-[90%]">
+          <!-- Question 1 -->
+          <div
+            class="collapse collapse-plus bg-gray-100 border-base-300 border"
+          >
+            <input type="checkbox" class="peer" />
+            <div
+              class="collapse-title font-semibold peer-checked:bg-blue-200 bg-gray-200"
+            >
+              1. The difference between var, let, and const
+            </div>
+            <div class="collapse-content text-sm bg-gray-50">
+              var is function-scoped and allows re-declaration, while let and
+              const are block-scoped. let is hoisted but can be reassigned and
+              does not allow re-declaration in the same block. const is also
+              hoisted but must be initialized when declared and cannot be
+              reassigned.
+            </div>
+          </div>
+          <br />
+          <!-- Question 2 -->
+          <div
+            class="collapse collapse-plus bg-gray-100 border-base-300 border"
+          >
+            <input type="checkbox" class="peer" />
+            <div
+              class="collapse-title font-semibold peer-checked:bg-blue-200 bg-gray-200"
+            >
+              2. The difference between map(), forEach(), and filter()
+            </div>
+            <div class="collapse-content text-sm bg-gray-50">
+              map() transforms each element and returns a new array. forEach()
+              is used for iteration and does not return anything. filter()
+              creates a new array containing only elements that meet a
+              condition.
+            </div>
+          </div>
+          <br />
+          <!-- Question 3 -->
+          <div
+            class="collapse collapse-plus bg-gray-100 border-base-300 border"
+          >
+            <input type="checkbox" class="peer" />
+            <div
+              class="collapse-title font-semibold peer-checked:bg-blue-200 bg-gray-200"
+            >
+              3. Explain arrow functions and how they are different from regular
+              functions?
+            </div>
+            <div class="collapse-content text-sm bg-gray-50">
+              Arrow functions provide a more concise syntax and do not have
+              their own this context. They inherit this from the surrounding
+              scope, unlike regular functions that have their own this context,
+              which is determined by how they are invoked.
+            </div>
+          </div>
+          <br />
+          <!-- Question 4 -->
+          <div
+            class="collapse collapse-plus bg-gray-100 border-base-300 border"
+          >
+            <input type="checkbox" class="peer" />
+            <div
+              class="collapse-title font-semibold peer-checked:bg-blue-200 bg-gray-200"
+            >
+              4. How JavaScript Promises work?
+            </div>
+            <div class="collapse-content text-sm bg-gray-50">
+              JavaScript Promises represent asynchronous operations and can be
+              in one of three states: pending, resolved, or rejected. They allow
+              you to handle asynchronous results with .then() for success or
+              .catch() for errors, making asynchronous code more manageable.
+            </div>
+          </div>
+          <br />
+          <!-- Question 5 -->
+          <div
+            class="collapse collapse-plus bg-gray-100 border-base-300 border"
+          >
+            <input type="checkbox" class="peer" />
+            <div
+              class="collapse-title font-semibold peer-checked:bg-blue-200 bg-gray-200"
+            >
+              5. How closures work in JavaScript?
+            </div>
+            <div class="collapse-content text-sm bg-gray-50">
+              A closure happens when an inner function remembers and can access
+              variables from its outer (enclosing) function, even after the
+              outer function has finished executing. This allows the inner
+              function to keep using those variables, which is useful for
+              creating private data and keeping things encapsulated.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <footer
+      class="flex md:flex-row min-h-44 p-4 items-center md:justify-between md:p-16 md:px-24 border-t-1 bg-slate-50"
+    >
+      <div class="foot-texts">
+        <div class="flex md:flex-row items-center">
+          <h1>English</h1>
+          <img src="assets/logo.png" alt="English Janala" />
+          <h1>জানালা</h1>
+        </div>
+        <div>
+          <p>ইংরেজি শিখুন সহজে</p>
+          <p>Providing ED-Tech Applications since 2025</p>
+        </div>
+      </div>
+      <div class="foot-links px-8">
+        <p>Follow us</p>
+        <div class="flex gap-4">
+          <a target="_blank" href="https://www.facebook.com/shahriar.utchas"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a target="_blank" href="https://github.com/Shahriar-Utchas"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a target="_blank" href="https://www.instagram.com/_utchas_/"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a target="_blank" href="https://www.linkedin.com/in/shahriar-utchas"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <script src="JS/index.js"></script>
+  </body>
+</html>
